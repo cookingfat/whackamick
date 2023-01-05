@@ -21,15 +21,16 @@ const muteButton = document.querySelector('#mute-button')
 // Add an event listener to the button that calls the pause method of the soundtrack when the button is clicked
 muteButton.addEventListener('click', () => {
     if (soundtrack.paused) {
-      soundtrack.play()
+        soundtrack.play()
     } else {
-      soundtrack.pause()
+        soundtrack.pause()
     }
-  })
+})
 
+let scoreTimer = null;
+let missedScore = 0;
 
-
-function run(){
+function run() {
     const i = Math.floor(Math.random() * holes.length)
     const hole = holes[i]
     let timer = null
@@ -52,6 +53,7 @@ function run(){
         img.addEventListener('click', () => {
             // Play the sound
             sound.play()
+            
             gameOver()
         })
     } else {
@@ -76,46 +78,94 @@ function run(){
                 setTimeout(() => {
                     hole.removeChild(img)
                     run()
-                }, 500)
+                }, 500)  // Set timeout to 500 milliseconds (0.5 seconds)
             }
         })
     }
 
     hole.appendChild(img)
+    
 
     // Only set a score timer if the current image is a mole
-    if (isMole) {
-        // Set a score timer that decreases the score by 10 every 1000 milliseconds (1 second)
-        scoreTimer = setInterval(() => {
-            score -= 10
-            scoreEl.textContent = score
-        }, 1000)
+    
+
+
+
+    // Speeds up the game as the score increases
+
+    if (score >= 400) {
+        timer = setTimeout(() => {
+            hole.removeChild(img);
+            clearInterval(scoreTimer); // Clear the score timer
+            run();
+        }, 400); // Set timeout to 400 milliseconds (0.4 seconds)
+    } else if (score >= 300) {
+        timer = setTimeout(() => {
+            hole.removeChild(img);
+            clearInterval(scoreTimer); // Clear the score timer
+            run();
+        }, 600); // Set timeout to 600 milliseconds (0.6 seconds)
+    } else if (score >= 200) {
+        timer = setTimeout(() => {
+            hole.removeChild(img);
+            clearInterval(scoreTimer); // Clear the score timer
+            run();
+        }, 800); // Set timeout to 800 milliseconds (0.8 seconds)
+    } else if (score >= 100) {
+        timer = setTimeout(() => {
+            hole.removeChild(img);
+            clearInterval(scoreTimer); // Clear the score timer
+            run();
+        }, 1000); // Set timeout to 1000 milliseconds (1 second)
+    } else {
+        timer = setTimeout(() => {
+            hole.removeChild(img);
+            clearInterval(scoreTimer); // Clear the score timer
+            run();
+        }, 1500);
     }
 
-    timer = setTimeout(() => {
-        hole.removeChild(img)
-        clearInterval(scoreTimer) // Clear the score timer
-        run()
-    }, 1500)
+    if (score >= 400) {
+        soundtrack.playbackRate = 1.75; // Set playback rate to 1.75x
+    } else if (score >= 300) {
+        soundtrack.playbackRate = 1.5; // Set playback rate to 1.5x
+    } else if (score >= 200) {
+        soundtrack.playbackRate = 1.25; // Set playback rate to 1.25x
+    } else if (score >= 100) {
+        soundtrack.playbackRate = 1.1; // Set playback rate to 1.1x
+    } else {
+        soundtrack.playbackRate = 1; // Set playback rate to 1x
+    }
+
+
 }
 
 // Define the gameOver function
 function gameOver() {
-    // Display a game over message
+    // Pause the soundtrack and play the gameover sound
     soundtrack.pause()
     gameover.play()
-
+    
+    // Display a game over message
     alert('Game Over!')
     soundtrack.play()
+    // Add an event listener to the alert button that unpauses the soundtrack and starts the game again when clicked
+    alert.addEventListener('click', () => {
+    
+    run()
+    })
     
     // Reset the score to 0
     score = 0
     scoreEl.textContent = score
-
+    
     // Clear any timeouts or intervals to stop the game
     clearTimeout(timer)
     clearInterval(scoreTimer)
-}
+    }
+    
+    
+
 
 run()
 
