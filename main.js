@@ -2,7 +2,7 @@ const cursor = document.querySelector('.cursor')
 const holes = [...document.querySelectorAll('.hole')]
 const scoreEl = document.querySelector('.score span')
 let score = 0
-
+const gameover = new Audio("assets/gameover.mp3")
 const sound = new Audio("assets/smash.mp3")
 // Create a new Audio object for the soundtrack
 const soundtrack = new Audio("assets/soundtrack.mp3")
@@ -102,8 +102,12 @@ function run(){
 // Define the gameOver function
 function gameOver() {
     // Display a game over message
-    alert('Game Over!')
+    soundtrack.pause()
+    gameover.play()
 
+    alert('Game Over!')
+    soundtrack.play()
+    
     // Reset the score to 0
     score = 0
     scoreEl.textContent = score
