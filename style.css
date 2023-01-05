@@ -19,8 +19,25 @@ body{
     align-items: center;
     overflow: hidden;
     cursor: none;
+    
 
 }
+
+/* Position the button in the top right corner */
+#mute-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 100px;
+    margin-top: 100px;
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    background-image: url('assets/mute-button.png'); /* Add the image as the button's background */
+    background-size: cover; /* Scale the image to cover the button */
+  }
+    
+  
 .score{
     font-size: 4em;
     margin-bottom: .5em;
