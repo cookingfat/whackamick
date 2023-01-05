@@ -19,7 +19,7 @@ body{
     align-items: center;
     overflow: hidden;
     cursor: none;
-    
+
 }
 .score{
     font-size: 4em;
@@ -34,6 +34,12 @@ body{
     grid-template-rows: repeat(3, 1fr);
     gap: 80px;
 }
+/*
+.mole, img {
+    width: 200px;
+    height: 200px;
+}
+*/
 .hole{
     background-color: #4e4cb95b;
     border-radius: 50%;
@@ -43,7 +49,16 @@ body{
     position: relative;
     overflow: hidden;
 }
-.hole .mole{
+.hole .mole {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 2;
+    animation: rise .3s ease-out;
+}
+
+.hole .bomb {
     width: 100%;
     position: absolute;
     left: 50%;
@@ -66,7 +81,7 @@ body{
     position: absolute;
     top: 100px;
     left: 100px;
-    background-image: url('assets/hammer3.png');
+    background-image: url('assets/hammer5.png');
     background-size: 100% 100%;
     transform: translate(-20%, -20%);
     transition: transform .1s;
