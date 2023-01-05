@@ -4,6 +4,30 @@ const scoreEl = document.querySelector('.score span')
 let score = 0
 
 const sound = new Audio("assets/smash.mp3")
+// Create a new Audio object for the soundtrack
+const soundtrack = new Audio("assets/soundtrack.mp3")
+
+// Set the loop property to true
+soundtrack.loop = true
+// Set the volume of the soundtrack to 70%
+soundtrack.volume = 0.3
+
+// Play the soundtrack
+soundtrack.play()
+
+// Get a reference to the mute button
+const muteButton = document.querySelector('#mute-button')
+
+// Add an event listener to the button that calls the pause method of the soundtrack when the button is clicked
+muteButton.addEventListener('click', () => {
+    if (soundtrack.paused) {
+      soundtrack.play()
+    } else {
+      soundtrack.pause()
+    }
+  })
+
+
 
 function run(){
     const i = Math.floor(Math.random() * holes.length)
@@ -25,7 +49,11 @@ function run(){
 
 
         // Add an event listener to the bomb that calls gameOver when clicked
-        img.addEventListener('click', gameOver)
+        img.addEventListener('click', () => {
+            // Play the sound
+            sound.play()
+            gameOver()
+        })
     } else {
         // Use the mole image
         img.classList.add('mole')
