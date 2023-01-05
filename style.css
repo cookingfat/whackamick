@@ -35,6 +35,7 @@ body{
     border-radius: 10px;
     background-image: url('assets/mute-button.png'); /* Add the image as the button's background */
     background-size: cover; /* Scale the image to cover the button */
+  
   }
     
   
@@ -103,6 +104,7 @@ body{
     transform: translate(-20%, -20%);
     transition: transform .1s;
     pointer-events: none;
+    z-index: 1;
 }
 .cursor.active{
     transform: translate(-20%, -20%) rotate(-45deg);
