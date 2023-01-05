@@ -142,28 +142,21 @@ function run() {
 
 // Define the gameOver function
 function gameOver() {
-    // Pause the soundtrack and play the gameover sound
+    // Display a game over message
     soundtrack.pause()
     gameover.play()
-    
-    // Display a game over message
+
     alert('Game Over!')
     soundtrack.play()
-    // Add an event listener to the alert button that unpauses the soundtrack and starts the game again when clicked
-    alert.addEventListener('click', () => {
-    
-    run()
-    })
-    
+
     // Reset the score to 0
     score = 0
     scoreEl.textContent = score
-    
+
     // Clear any timeouts or intervals to stop the game
     clearTimeout(timer)
     clearInterval(scoreTimer)
-    }
-    
+}
     
 
 
