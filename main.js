@@ -28,7 +28,12 @@ muteButton.addEventListener('click', () => {
 })
 
 let scoreTimer = null;
-let missedScore = 0;
+const missedScoreEl = document.createElement('div')
+missedScoreEl.classList.add('missed-score')
+missedScoreEl.innerHTML = 'MISSED: <span>0</span>'
+document.body.appendChild(missedScoreEl)
+
+let missedScore = 0
 
 function run() {
     const i = Math.floor(Math.random() * holes.length)
@@ -81,12 +86,26 @@ function run() {
                 }, 500)  // Set timeout to 500 milliseconds (0.5 seconds)
             }
         })
+if (isMole) {
+    missedScoreTimer = setTimeout(() => {
+      if (!img.clicked) {
+        missedScore += 1
+        missedScoreEl.querySelector('span').textContent = missedScore
+
+        // Check if the player has reached 5 misses
+        if (missedScore === 5) {
+          gameOver()
+        }
+      }
+    }, 1500)
+  }
+        
     }
+
 
     hole.appendChild(img)
     
 
-    // Only set a score timer if the current image is a mole
     
 
 
@@ -98,19 +117,19 @@ function run() {
             hole.removeChild(img);
             clearInterval(scoreTimer); // Clear the score timer
             run();
-        }, 400); // Set timeout to 400 milliseconds (0.4 seconds)
+        }, 700); // Set timeout to 700 milliseconds (0.7 seconds)
     } else if (score >= 300) {
         timer = setTimeout(() => {
             hole.removeChild(img);
             clearInterval(scoreTimer); // Clear the score timer
             run();
-        }, 600); // Set timeout to 600 milliseconds (0.6 seconds)
+        }, 800); // Set timeout to 800 milliseconds (0.8 seconds)
     } else if (score >= 200) {
         timer = setTimeout(() => {
             hole.removeChild(img);
             clearInterval(scoreTimer); // Clear the score timer
             run();
-        }, 800); // Set timeout to 800 milliseconds (0.8 seconds)
+        }, 900); // Set timeout to 900 milliseconds (0.9 seconds)
     } else if (score >= 100) {
         timer = setTimeout(() => {
             hole.removeChild(img);
@@ -143,22 +162,65 @@ function run() {
 // Define the gameOver function
 function gameOver() {
     // Display a game over message
-    soundtrack.pause()
     gameover.play()
-
-    alert('Game Over!')
+    soundtrack.pause()
+    
+alert('Game Over! Your final score is: ' + score)
+   
     soundtrack.play()
 
     // Reset the score to 0
     score = 0
     scoreEl.textContent = score
+    // Reset the missed score to 0
+    missedScore = 0
+    missedScoreEl.querySelector('span').textContent = missedScore
 
     // Clear any timeouts or intervals to stop the game
     clearTimeout(timer)
     clearInterval(scoreTimer)
 }
-    
 
+/*
+function gameOver() {
+    // Pause the soundtrack
+    soundtrack.pause()
+  
+    // Play the gameover sound
+    gameover.play()
+  
+    // Create the gameover box
+    const gameoverBox = document.createElement('div')
+    gameoverBox.classList.add('gameover-box')
+    gameoverBox.innerHTML = `
+      <p>Game Over!</p>
+      <p>Your final score is: ${score}</p>
+      <button id="restart-button">Restart</button>
+    `
+    document.body.appendChild(gameoverBox)
+  
+    // Add an event listener to the restart button
+    const restartButton = document.querySelector('#restart-button')
+    restartButton.addEventListener('click', () => {
+      // Remove the gameover box
+      document.body.removeChild(gameoverBox)
+  
+      // Reset the score
+      score = 0
+      scoreEl.textContent = score
+  
+      // Reset the missed score
+      missedScore = 0
+      missedScoreEl.querySelector('span').textContent = missedScore
+  
+      // Start the game again
+      run()
+  
+      // Play the soundtrack
+      soundtrack.play()
+    })
+  }
+*/
 
 run()
 
